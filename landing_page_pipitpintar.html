@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PipitPintar — Media Edukasi & Worksheet Anak Usia Dini</title>
+    <meta name="description" content="Lembar kerja (worksheet) cetak & digital PDF untuk anak PAUD, TK, dan SD Awal. Belajar angka, huruf, logika, dan coding dasar tanpa layar (unplugged coding).">
+    
+    <!-- Google Fonts: Fredoka untuk Heading ceria, Plus Jakarta Sans untuk teks yang nyaman dibaca -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        pipit: {
+                            cream: '#FFFBEB',
+                            amber: '#FBBF24',
+                            amberDark: '#D97706',
+                            sky: '#0EA5E9',
+                            skyDark: '#0284C7',
+                            mint: '#10B981',
+                            mintDark: '#059669',
+                            coral: '#F43F5E',
+                            purple: '#8B5CF6',
+                            ink: '#1E293B'
+                        }
+                    },
+                    boxShadow: {
+                        'playful': '0 10px 25px -5px rgba(251, 191, 36, 0.25), 0 8px 10px -6px rgba(14, 165, 233, 0.15)',
+                        'card': '0 4px 20px -2px rgba(30, 41, 59, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS untuk animasi halus & mencegah horizontal overflow -->
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #FFFBEB;
+            color: #1E293B;
+        }
+        
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: floatSlow 5s ease-in-out 1.5s infinite;
+        }
+
+        /* Custom scrollbar lembut */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFBEB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCD34D;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F59E0B;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-pipit-amber selection:text-slate-900">
+
+    <!-- ==================== 1. NAVBAR RESPONSIF ==================== -->
+    <header class="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-amber-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <!-- Logo PipitPintar -->
+                <a href="#beranda" class="flex items-center gap-2.5 group focus:outline-none">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-pipit-amber to-amber-500 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                        <!-- Custom SVG Burung Pipit Ceria -->
+                        <svg class="w-7 h-7 text-white" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M48 24C48 15.1634 40.8366 8 32 8C23.1634 8 16 15.1634 16 24C16 27.5 17.2 30.8 19.2 33.4C15.5 36.5 13 41.2 13 46.5C13 51.7 17.3 56 22.5 56H41.5C46.7 56 51 51.7 51 46.5C51 41.2 48.5 36.5 44.8 33.4C46.8 30.8 48 27.5 48 24Z" fill="white"/>
+                            <!-- Paruh -->
+                            <path d="M47 22L56 25L47 28V22Z" fill="#F43F5E"/>
+                            <!-- Mata -->
+                            <circle cx="39" cy="21" r="3" fill="#1E293B"/>
+                            <circle cx="40" cy="20" r="1" fill="white"/>
+                            <!-- Sayap -->
+                            <path d="M23 36C28 33 36 35 38 41C34 46 25 46 21 41C20 39.5 21 37.2 23 36Z" fill="#0EA5E9"/>
+                            <!-- Jambul -->
+                            <path d="M30 8C30 4 34 3 35 7" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-display font-bold text-xl sm:text-2xl tracking-tight text-slate-800">
+                            Pipit<span class="text-pipit-sky">Pintar</span>
+                        </span>
+                        <span class="hidden sm:block text-[11px] font-medium text-amber-600 -mt-1">Worksheet & Edukasi Anak</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+                    <a href="#beranda" class="hover:text-pipit-sky transition-colors">Beranda</a>
+                    <a href="#keunggulan" class="hover:text-pipit-sky transition-colors">Keunggulan</a>
+                    <a href="#katalog" class="hover:text-pipit-sky transition-colors">Katalog Produk</a>
+                    <a href="#simulasi-coding" class="hover:text-pipit-sky transition-colors flex items-center gap-1">
+                        <span>Mini Game</span>
+                        <span class="px-1.5 py-0.5 text-[10px] bg-emerald-100 text-emerald-700 rounded-full">Seru!</span>
+                    </a>
+                    <a href="#testimoni" class="hover:text-pipit-sky transition-colors">Testimoni</a>
+                    <a href="#cara-pesan" class="hover:text-pipit-sky transition-colors">Cara Pesan & FAQ</a>
+                </nav>
+
+                <!-- CTA Button & Mobile Menu Trigger -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="https://wa.me/6285753987438?text=Halo%20Admin%20PipitPintar%2C%20saya%20ingin%20tanya-tanya%20mengenai%20worksheet%20edukasi%20anak." target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 bg-pipit-mint hover:bg-pipit-mintDark text-white font-semibold text-xs sm:text-sm px-3.5 sm:px-5 py-2.5 rounded-full shadow-sm hover:shadow transition-all active:scale-95">
+                        <!-- WA Icon -->
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+                        <span>Chat WhatsApp</span>
+                    </a>
+
+                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-btn" type="button" aria-label="Buka Menu" class="md:hidden p-2.5 rounded-xl text-slate-700 hover:bg-amber-100 focus:outline-none">
+                        <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-amber-100 px-4 pt-2 pb-5 space-y-2 shadow-lg">
+            <a href="#beranda" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Beranda</a>
+            <a href="#keunggulan" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Keunggulan</a>
+            <a href="#katalog" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Katalog Worksheet</a>
+            <a href="#simulasi-coding" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Mini Game Coding Anak</a>
+            <a href="#testimoni" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Testimoni Bunda & Guru</a>
+            <a href="#cara-pesan" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-amber-50 hover:text-pipit-sky">Cara Pesan & FAQ</a>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section id="beranda" class="relative pt-8 pb-16 sm:pt-14 sm:pb-24 overflow-hidden">
+        <!-- Dekorasi Latar Lembut -->
+        <div class="absolute top-10 -left-16 w-64 h-64 bg-amber-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 -right-16 w-72 h-72 bg-sky-200/40 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                
+                <!-- Kolom Kiri: Copywriting Persuasif -->
+                <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-800 text-xs sm:text-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-pipit-mint animate-ping"></span>
+                        <span>Solusi Cerdas Kurangi Screen Time Anak Usia 3–8 Tahun</span>
+                    </div>
+
+                    <h1 class="font-display font-bold text-3xl sm:text-5xl lg:text-[52px] text-slate-800 leading-[1.15]">
+                        Belajar Jadi Mainan Paling Seru Tanpa <span class="text-pipit-sky relative inline-block">
+                            Layar Gadget!
+                            <svg class="w-full h-3 -bottom-1 left-0 text-pipit-amber absolute" viewBox="0 0 200 12" fill="none"><path d="M2 9C50 2 150 2 198 9" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+                        </span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Hadirkan aktivitas bermakna di rumah maupun di kelas PAUD/TK bersama <strong class="text-slate-800">PipitPintar</strong>. Lembar kerja (worksheet) cetak & PDF siap print untuk melatih angka, huruf abjad, mewarnai, hingga <span class="font-semibold text-pipit-mintDark">unplugged coding</span> (logika pemrograman dasar tanpa layar).
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a href="#katalog" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-pipit-amber hover:bg-amber-400 text-slate-900 font-display font-bold text-base sm:text-lg px-7 py-3.5 rounded-2xl shadow-playful transition-all hover:-translate-y-0.5 active:translate-y-0">
+                            <span>Lihat Katalog Worksheet</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </a>
+
+                        <a href="https://wa.me/6285753987438?text=Halo%20PipitPintar%2C%20saya%20tertarik%20konsultasi%20paket%20worksheet%20untuk%20anak%20saya." target="_blank" rel="noopener noreferrer"
+                           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-sky-50 text-pipit-skyDark border-2 border-sky-200 font-semibold text-base px-6 py-3.5 rounded-2xl transition-all">
+                            <span>Tanya via WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <!-- Mini Trust Indicators -->
+                    <div class="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs sm:text-sm font-medium text-slate-500">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-pipit-mint text-base">✔</span> Tersedia Cetak & File PDF
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-pipit-mint text-base">✔</span> Kurikulum PAUD, TK & SD Awal
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-pipit-mint text-base">✔</span> Kirim dari Tabalong ke Seluruh Indonesia
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Kartu Visual Interaktif Preview Lembar Kerja -->
+                <div class="lg:col-span-6">
+                    <div class="relative mx-auto max-w-lg">
+                        <!-- Kartu Utama Preview Worksheet -->
+                        <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-xl border-2 border-amber-100 relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                                    <span class="ml-2 text-xs font-bold uppercase tracking-wider text-slate-400">Intip Isi Worksheet</span>
+                                </div>
+                                <div class="flex gap-1 bg-slate-100 p-1 rounded-xl" id="hero-preview-tabs">
+                                    <button type="button" data-preview="coding" class="hero-tab-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-pipit-sky text-white shadow-sm transition">Coding</button>
+                                    <button type="button" data-preview="angka" class="hero-tab-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Angka</button>
+                                    <button type="button" data-preview="huruf" class="hero-tab-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">Huruf</button>
+                                </div>
+                            </div>
+
+                            <!-- Konten Dinamis Preview Worksheet -->
+                            <div id="hero-preview-box" class="bg-amber-50/70 rounded-2xl p-4 sm:p-5 border-2 border-dashed border-amber-300 min-h-[250px] flex flex-col justify-between transition-all">
+                                <!-- Diisi via JS agar interaktif saat tab diklik -->
+                            </div>
+
+                            <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+                                <span>Ukuran A4 • Full Color • Siap Print / Cetak</span>
+                                <a href="#simulasi-coding" class="font-bold text-pipit-sky hover:underline">Coba Mainkan →</a>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 1 -->
+                        <div class="hidden sm:flex items-center gap-3 bg-white px-4 py-3 rounded-2xl shadow-lg border border-emerald-100 absolute -bottom-5 -left-6 z-20 animate-float">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-pipit-mint flex items-center justify-center text-xl">🧩</div>
+                            <div>
+                                <p class="font-display font-bold text-sm text-slate-800">Unplugged Coding</p>
+                                <p class="text-xs text-slate-500">Belajar logika tanpa HP</p>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge 2 -->
+                        <div class="hidden sm:flex items-center gap-3 bg-white px-4 py-3 rounded-2xl shadow-lg border border-sky-100 absolute -top-5 -right-4 z-20 animate-float-delayed">
+                            <div class="w-10 h-10 rounded-xl bg-sky-100 text-pipit-sky flex items-center justify-center text-xl">🖍️</div>
+                            <div>
+                                <p class="font-display font-bold text-sm text-slate-800">Motorik & Kreativitas</p>
+                                <p class="text-xs text-slate-500">Ilustrasi ramah anak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. KEUNGGULAN PIPITPINTAR (4 PILAR) ==================== -->
+    <section id="keunggulan" class="py-16 sm:py-20 bg-white border-y border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-pipit-sky bg-sky-50 px-3.5 py-1.5 rounded-full">Kenapa Memilih PipitPintar?</span>
+                <h2 class="font-display font-bold text-2xl sm:text-4xl text-slate-800 mt-3">Dirancang Khusus untuk Tumbuh Kembang Si Kecil</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-3">Setiap lembar kerja disusun dengan pendekatan bermain sambil belajar agar anak antusias tanpa merasa dipaksa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Pilar 1 -->
+                <div class="bg-amber-50/60 hover:bg-amber-50 rounded-3xl p-6 border border-amber-100 transition-all hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pipit-amber text-white flex items-center justify-center text-2xl shadow-sm mb-5">🎨</div>
+                    <h3 class="font-display font-bold text-lg text-slate-800 mb-2">Desain Ceria & Ramah Anak</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Ilustrasi penuh warna yang menggemaskan membuat anak betah berlama-lama menyelesaikan tantangan di setiap halaman.</p>
+                </div>
+
+                <!-- Pilar 2 -->
+                <div class="bg-sky-50/60 hover:bg-sky-50 rounded-3xl p-6 border border-sky-100 transition-all hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pipit-sky text-white flex items-center justify-center text-2xl shadow-sm mb-5">📈</div>
+                    <h3 class="font-display font-bold text-lg text-slate-800 mb-2">Kurikulum Bertahap</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Disusun urut mulai dari latihan garis & motorik halus, mengenal huruf & angka, logika, hingga pengenalan coding dasar.</p>
+                </div>
+
+                <!-- Pilar 3 -->
+                <div class="bg-emerald-50/60 hover:bg-emerald-50 rounded-3xl p-6 border border-emerald-100 transition-all hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pipit-mint text-white flex items-center justify-center text-2xl shadow-sm mb-5">🖨️</div>
+                    <h3 class="font-display font-bold text-lg text-slate-800 mb-2">Versi Cetak & File PDF</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Sangat fleksibel! Bunda bisa pesan paket cetak fisik siap pakai, atau beli file PDF resolusi tinggi untuk dicetak berkali-kali.</p>
+                </div>
+
+                <!-- Pilar 4 -->
+                <div class="bg-rose-50/60 hover:bg-rose-50 rounded-3xl p-6 border border-rose-100 transition-all hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-pipit-coral text-white flex items-center justify-center text-2xl shadow-sm mb-5">📵</div>
+                    <h3 class="font-display font-bold text-lg text-slate-800 mb-2">100% Bebas Screen Time</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Melatih fokus, kesabaran, kemampuan memegang pensil, serta koordinasi mata dan tangan secara alami tanpa radiasi gadget.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. KATALOG PRODUK INTERAKTIF ==================== -->
+    <section id="katalog" class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-3.5 py-1.5 rounded-full">Katalog Lembar Kerja</span>
+                <h2 class="font-display font-bold text-2xl sm:text-4xl text-slate-800 mt-3">Pilih Worksheet Favorit Si Kecil</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-3">Pilih format <strong>File PDF (Siap Print)</strong> atau <strong>Cetak Fisik (Kertas HVS 100gsm Tebal)</strong> langsung pada kartu produk sebelum memesan.</p>
+            </div>
+
+            <!-- Filter Kategori -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10" id="catalog-filters">
+                <button type="button" data-filter="all" class="filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-slate-800 text-white shadow-sm transition">Semua Seri</button>
+                <button type="button" data-filter="angka" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-600 hover:bg-amber-100 border border-slate-200 transition">🔢 Angka & Berhitung</button>
+                <button type="button" data-filter="huruf" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-600 hover:bg-amber-100 border border-slate-200 transition">🔤 Huruf & Membaca</button>
+                <button type="button" data-filter="coding" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-600 hover:bg-amber-100 border border-slate-200 transition">🤖 Coding Dasar</button>
+                <button type="button" data-filter="bundling" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-600 hover:bg-amber-100 border border-slate-200 transition">🎁 Paket Bundling Hemat</button>
+            </div>
+
+            <!-- Grid Produk (Di-render via JavaScript) -->
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Kartu produk otomatis muncul di sini -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. SIMULASI MINI GAME UNPLUGGED CODING ==================== -->
+    <section id="simulasi-coding" class="py-16 sm:py-20 bg-gradient-to-br from-sky-500 via-sky-600 to-indigo-600 text-white relative overflow-hidden">
+        <!-- Dekorasi Geometri -->
+        <div class="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-300/20 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-amber-200 text-xs font-bold uppercase tracking-wider mb-3">
+                    Simulasi Interaktif Orang Tua & Anak
+                </span>
+                <h2 class="font-display font-bold text-2xl sm:text-4xl">Coba Mini Game "Unplugged Coding" PipitPintar!</h2>
+                <p class="text-sky-100 text-sm sm:text-base mt-2">
+                    Seperti inilah cara anak belajar konsep algoritma dan arah di lembar kerja kami—seru, logis, dan mudah dipahami anak usia 4–7 tahun!
+                </p>
+            </div>
+
+            <div class="bg-white text-slate-800 rounded-3xl p-5 sm:p-8 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Papan Grid Permainan (7 Kolom) -->
+                <div class="lg:col-span-7 flex flex-col items-center">
+                    <div class="flex items-center justify-between w-full max-w-sm mb-3">
+                        <span id="game-level-badge" class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full">Misi 1: Bantu Pipit ke Sarang!</span>
+                        <button type="button" id="btn-next-level" class="text-xs font-bold text-pipit-sky hover:underline">Ganti Misi ↻</button>
+                    </div>
+
+                    <!-- Grid 4x4 -->
+                    <div id="coding-grid" class="grid grid-cols-4 gap-2 sm:gap-3 bg-slate-100 p-3 sm:p-4 rounded-2xl border-2 border-slate-200 w-full max-w-sm aspect-square">
+                        <!-- Kotak 4x4 diisi oleh JS -->
+                    </div>
+
+                    <p class="text-xs text-slate-500 mt-3 text-center">
+                        Hindari awan hujan ⛈️ dan antarkan Burung Pipit 🐤 menuju tujuan!
+                    </p>
+                </div>
+
+                <!-- Panel Kontrol Perintah Kode (5 Kolom) -->
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-5 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-slate-800">1. Susun Urutan Langkah (Kode):</h3>
+                        <p class="text-xs text-slate-500 mb-3">Klik tombol panah di bawah untuk menyusun rute perjalanan Pipit.</p>
+
+                        <!-- Antrean Perintah -->
+                        <div id="command-queue" class="min-h-[54px] bg-white border-2 border-dashed border-sky-300 rounded-xl p-2.5 flex flex-wrap items-center gap-1.5">
+                            <span class="text-xs text-slate-400 italic">Belum ada langkah dipilih...</span>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Arah -->
+                    <div>
+                        <p class="text-xs font-bold text-slate-600 mb-2">Pilih Blok Arah:</p>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button type="button" onclick="addCommand('UP')" class="cmd-btn bg-white hover:bg-sky-50 active:scale-95 border-2 border-slate-200 rounded-xl py-2.5 font-bold text-lg shadow-sm flex flex-col items-center">
+                                <span>⬆️</span>
+                                <span class="text-[10px] text-slate-500">Atas</span>
+                            </button>
+                            <button type="button" onclick="addCommand('DOWN')" class="cmd-btn bg-white hover:bg-sky-50 active:scale-95 border-2 border-slate-200 rounded-xl py-2.5 font-bold text-lg shadow-sm flex flex-col items-center">
+                                <span>⬇️</span>
+                                <span class="text-[10px] text-slate-500">Bawah</span>
+                            </button>
+                            <button type="button" onclick="addCommand('LEFT')" class="cmd-btn bg-white hover:bg-sky-50 active:scale-95 border-2 border-slate-200 rounded-xl py-2.5 font-bold text-lg shadow-sm flex flex-col items-center">
+                                <span>⬅️</span>
+                                <span class="text-[10px] text-slate-500">Kiri</span>
+                            </button>
+                            <button type="button" onclick="addCommand('RIGHT')" class="cmd-btn bg-white hover:bg-sky-50 active:scale-95 border-2 border-slate-200 rounded-xl py-2.5 font-bold text-lg shadow-sm flex flex-col items-center">
+                                <span>➡️</span>
+                                <span class="text-[10px] text-slate-500">Kanan</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Status -->
+                    <div id="game-status-box" class="hidden rounded-xl p-3 text-xs sm:text-sm font-semibold text-center"></div>
+
+                    <!-- Tombol Jalankan & Reset -->
+                    <div class="flex gap-2.5 pt-1">
+                        <button type="button" id="btn-run-code" onclick="runCode()" class="flex-1 bg-pipit-mint hover:bg-pipit-mintDark text-white font-display font-bold py-3 px-4 rounded-xl shadow transition active:scale-95">
+                            ▶ Jalankan Kode
+                        </button>
+                        <button type="button" onclick="resetGame()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl transition active:scale-95">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. TESTIMONI ORANG TUA & GURU ==================== -->
+    <section id="testimoni" class="py-16 sm:py-24 bg-white border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3.5 py-1.5 rounded-full">Kata Bunda & Guru PAUD</span>
+                <h2 class="font-display font-bold text-2xl sm:text-4xl text-slate-800 mt-3">Sudah Membantu Ratusan Anak Belajar Ceria</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Testimoni 1 -->
+                <div class="bg-pipit-cream rounded-3xl p-6 sm:p-7 border border-amber-100 shadow-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">★★★★★</div>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed italic">
+                            "Anak saya usia 4,5 tahun biasanya susah lepas dari YouTube kalau sore. Sejak beli Paket Bundling PipitPintar, tiap sore dia yang minta 'Ma, ayo main panah-panahan kode lagi!'. Gambarnya lucu banget."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-amber-200/60">
+                        <div class="w-10 h-10 rounded-full bg-amber-200 text-amber-800 font-display font-bold flex items-center justify-center">RN</div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-800">Bunda Rina Marlina</p>
+                            <p class="text-xs text-slate-500">Orang Tua Murid TK • Tanjung, Tabalong</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 2 -->
+                <div class="bg-pipit-cream rounded-3xl p-6 sm:p-7 border border-amber-100 shadow-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">★★★★★</div>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed italic">
+                            "Kami pesan versi PDF untuk bahan ajar di kelompok bermain (KB). Sangat membantu guru karena tinggal cetak sesuai jumlah murid, dan materi pengenalan logika dasarnya masih jarang ada di buku TK biasa."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-amber-200/60">
+                        <div class="w-10 h-10 rounded-full bg-sky-200 text-sky-800 font-display font-bold flex items-center justify-center">SW</div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-800">Ibu Siti Wahyuni, S.Pd.</p>
+                            <p class="text-xs text-slate-500">Guru PAUD Ceria • Banjarmasin</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 3 -->
+                <div class="bg-pipit-cream rounded-3xl p-6 sm:p-7 border border-amber-100 shadow-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-1 text-amber-400 text-lg mb-3">★★★★★</div>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed italic">
+                            "Pesan versi cetak fisiknya, kertasnya tebal (100gsm) jadi dipakai mewarnai pakai spidol pun tidak tembus ke belakang. Pengemasan rapi dan adminnya ramah banget diajak konsultasi usia anak."
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 mt-6 pt-4 border-t border-amber-200/60">
+                        <div class="w-10 h-10 rounded-full bg-emerald-200 text-emerald-800 font-display font-bold flex items-center justify-center">DA</div>
+                        <div>
+                            <p class="font-bold text-sm text-slate-800">Bunda Dina Anggraini</p>
+                            <p class="text-xs text-slate-500">Ibu Rumah Tangga • Balikpapan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 7. CARA PESAN & FAQ ACCORDION ==================== -->
+    <section id="cara-pesan" class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Kolom Kiri: Langkah Cara Pemesanan -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-pipit-sky bg-sky-100 px-3.5 py-1.5 rounded-full">Praktis & Cepat</span>
+                    <h2 class="font-display font-bold text-2xl sm:text-3xl text-slate-800">Cara Pemesanan Worksheet PipitPintar</h2>
+                    <p class="text-sm sm:text-base text-slate-600">Tidak perlu ribet membuat akun. Pesan langsung terhubung dengan admin kami via WhatsApp.</p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-4 bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+                            <div class="w-9 h-9 rounded-xl bg-pipit-amber text-slate-900 font-display font-bold flex items-center justify-center shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm sm:text-base">Pilih Produk & Format</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Tentukan seri worksheet di katalog, lalu pilih format <strong>File PDF</strong> atau <strong>Cetak Fisik</strong>.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+                            <div class="w-9 h-9 rounded-xl bg-pipit-sky text-white font-display font-bold flex items-center justify-center shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm sm:text-base">Klik Tombol "Pesan via WhatsApp"</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Format pesanan otomatis terisi. Admin akan mengonfirmasi total biaya & ongkir (jika cetak fisik).</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
+                            <div class="w-9 h-9 rounded-xl bg-pipit-mint text-white font-display font-bold flex items-center justify-center shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm sm:text-base">Terima File Instan / Paket Dikirim</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-0.5">File PDF dikirim langsung ke WA/Email hari itu juga. Paket cetak dikirim dari Murung Pudak, Tabalong.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: FAQ Accordion -->
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-amber-100 shadow-card">
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-800 mb-6">Pertanyaan yang Sering Diajukan (FAQ)</h3>
+                        
+                        <div class="space-y-3" id="faq-container">
+                            <!-- FAQ Item 1 -->
+                            <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden">
+                                <button type="button" class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-sm sm:text-base text-slate-800 hover:bg-amber-50/50 transition">
+                                    <span>Apa bedanya versi File PDF dan versi Cetak Fisik?</span>
+                                    <span class="faq-icon text-pipit-sky text-xl font-bold transition-transform">+</span>
+                                </button>
+                                <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                                    <strong>Versi File PDF:</strong> Anda mendapatkan file digital resolusi tinggi (ukuran A4) yang dikirim via WhatsApp/Email setelah pembayaran. Bisa dicetak sendiri di rumah atau tempat fotokopi berkali-kali untuk pemakaian pribadi.<br><br>
+                                    <strong>Versi Cetak Fisik:</strong> Kami yang mencetakkan untuk Anda menggunakan kertas HVS tebal 100gsm (full color, tinta tajam, tidak mudah tembus spidol), dikemas rapi dalam map kancing plastik, dan dikirim ke alamat Anda.
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 2 -->
+                            <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden">
+                                <button type="button" class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-sm sm:text-base text-slate-800 hover:bg-amber-50/50 transition">
+                                    <span>Dari mana pengiriman versi cetak fisik dilakukan?</span>
+                                    <span class="faq-icon text-pipit-sky text-xl font-bold transition-transform">+</span>
+                                </button>
+                                <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                                    Semua pesanan cetak fisik dicetak dan dikirim langsung dari workshop kami di <strong>Jl. Fajar Baru, No. 105, RT. 02, Belimbing Raya, Murung Pudak, Kab. Tabalong, Kalimantan Selatan (71571)</strong>. Untuk wilayah Tanjung & Murung Pudak bisa ambil di tempat atau kurir lokal, sedangkan luar kota dikirim via ekspedisi reguler/kargo ke seluruh Indonesia.
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 3 -->
+                            <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden">
+                                <button type="button" class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-sm sm:text-base text-slate-800 hover:bg-amber-50/50 transition">
+                                    <span>Apakah ada harga khusus untuk sekolah PAUD, TK, atau Bimbel?</span>
+                                    <span class="faq-icon text-pipit-sky text-xl font-bold transition-transform">+</span>
+                                </button>
+                                <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                                    Tentu ada! Kami menyediakan <strong>Paket Lisensi Sekolah (PDF)</strong> maupun <strong>Harga Grosir Cetak Fisik</strong> minimal pemesanan 15 paket untuk lembaga PAUD, TK, TPA, maupun rumah belajar. Silakan hubungi admin via WhatsApp untuk mendapatkan penawaran khusus guru/sekolah.
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 4 -->
+                            <div class="faq-item border border-slate-200 rounded-2xl overflow-hidden">
+                                <button type="button" class="faq-trigger w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-sm sm:text-base text-slate-800 hover:bg-amber-50/50 transition">
+                                    <span>Anak saya belum bisa membaca, apakah bisa mengerjakan seri Unplugged Coding?</span>
+                                    <span class="faq-icon text-pipit-sky text-xl font-bold transition-transform">+</span>
+                                </button>
+                                <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                                    Sangat bisa! Lembar kerja <em>Unplugged Coding</em> PipitPintar dirancang menggunakan simbol visual (panah arah, warna, pola gambar, dan labirin) sehingga anak usia 4 tahun yang belum lancar membaca pun dapat memahaminya dengan sedikit pendampingan orang tua.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 8. FOOTER & FLOATING WHATSAPP ==================== -->
+    <footer class="bg-slate-900 text-slate-300 pt-14 pb-24 sm:pb-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-slate-800">
+                <!-- Brand Info -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 rounded-2xl bg-pipit-amber flex items-center justify-center text-slate-900 font-display font-bold text-xl">🐤</div>
+                        <span class="font-display font-bold text-2xl text-white">Pipit<span class="text-pipit-sky">Pintar</span></span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Media edukasi kreatif anak usia dini (PAUD, TK, SD Awal). Menghadirkan lembar kerja cetak & digital untuk membangun fondasi literasi, numerasi, dan berpikir komputasional sejak dini tanpa layar gadget.
+                    </p>
+                </div>
+
+                <!-- Navigasi Cepat -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="font-display font-bold text-white text-base">Menu Cepat</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#beranda" class="hover:text-pipit-amber transition">Beranda</a></li>
+                        <li><a href="#keunggulan" class="hover:text-pipit-amber transition">Keunggulan Produk</a></li>
+                        <li><a href="#katalog" class="hover:text-pipit-amber transition">Katalog Worksheet</a></li>
+                        <li><a href="#simulasi-coding" class="hover:text-pipit-amber transition">Mini Game Coding</a></li>
+                        <li><a href="#cara-pesan" class="hover:text-pipit-amber transition">Cara Pesan & FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Alamat & Kontak -->
+                <div class="md:col-span-4 space-y-3">
+                    <h4 class="font-display font-bold text-white text-base">Alamat & Kontak Resmi</h4>
+                    <div class="space-y-2.5 text-sm text-slate-400">
+                        <p class="flex items-start gap-2.5">
+                            <span class="text-pipit-amber mt-0.5">📍</span>
+                            <span>Jl. Fajar Baru, No. 105, RT. 02, Belimbing Raya, Murung Pudak, Kab. Tabalong, Kalimantan Selatan 71571</span>
+                        </p>
+                        <p class="flex items-center gap-2.5">
+                            <span class="text-pipit-mint">📱</span>
+                            <a href="https://wa.me/6285753987438" target="_blank" rel="noopener noreferrer" class="hover:text-white font-semibold text-slate-200">0857-5398-7438 (WhatsApp Admin)</a>
+                        </p>
+                        <p class="flex items-center gap-2.5">
+                            <span class="text-pipit-sky">⏰</span>
+                            <span>Senin – Sabtu: 08.00 – 17.00 WITA</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; <span id="current-year"></span> PipitPintar. Hak Cipta Dilindungi Undang-Undang.</p>
+                <p>Dibuat dengan penuh cinta untuk generasi cerdas Indonesia 🇮🇩</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6285753987438?text=Halo%20Admin%20PipitPintar%2C%20saya%20ingin%20bertanya%20tentang%20produk%20worksheet%20anak." target="_blank" rel="noopener noreferrer"
+       aria-label="Chat WhatsApp PipitPintar"
+       class="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 bg-pipit-mint hover:bg-pipit-mintDark text-white font-bold px-4 py-3.5 rounded-full shadow-xl hover:scale-105 transition-all group">
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+        <span class="text-sm pr-1">Tanya Admin</span>
+    </a>
+
+    <!-- ==================== MODAL DETAIL PRODUK ==================== -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-amber-100 animate-[fadeIn_0.2s_ease-out]">
+            <div id="modal-header-bg" class="p-6 text-white relative">
+                <button type="button" onclick="closeProductModal()" aria-label="Tutup Detail" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/20 hover:bg-black/30 text-white flex items-center justify-center font-bold">✕</button>
+                <span id="modal-age" class="inline-block px-3 py-1 rounded-full bg-white/25 text-xs font-bold mb-2"></span>
+                <h3 id="modal-title" class="font-display font-bold text-2xl"></h3>
+                <p id="modal-pages" class="text-xs opacity-90 mt-1"></p>
+            </div>
+            <div class="p-6 space-y-4">
+                <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed"></p>
+                
+                <div class="bg-amber-50/80 rounded-2xl p-4 border border-amber-100">
+                    <p class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2">Materi yang Dipelajari Anak:</p>
+                    <ul id="modal-highlights" class="space-y-1.5 text-xs sm:text-sm text-slate-700"></ul>
+                </div>
+
+                <!-- Pilihan Format di dalam Modal -->
+                <div>
+                    <p class="text-xs font-bold text-slate-500 mb-2">Pilih Format Pesanan:</p>
+                    <div class="grid grid-cols-2 gap-2.5" id="modal-format-selector">
+                        <!-- Diisi via JS -->
+                    </div>
+                </div>
+
+                <div class="pt-2 flex items-center justify-between gap-4 border-t border-slate-100">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Harga Terpilih</span>
+                        <span id="modal-price" class="font-display font-bold text-2xl text-slate-800"></span>
+                    </div>
+                    <a id="modal-wa-btn" href="#" target="_blank" rel="noopener noreferrer"
+                       class="flex-1 text-center bg-pipit-mint hover:bg-pipit-mintDark text-white font-display font-bold py-3.5 px-5 rounded-2xl shadow transition">
+                        Pesan via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== VANILLA JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // Set Tahun Dinamis di Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // 1. MOBILE NAVIGATION TOGGLE
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            iconOpen.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+
+        // 2. HERO INTERACTIVE WORKSHEET PREVIEW TABS
+        const heroPreviews = {
+            coding: `
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 bg-sky-100 text-sky-700 font-bold text-xs rounded-full">Lembar Unplugged Coding • Usia 4-7 Th</span>
+                        <span class="text-xs font-bold text-slate-400">Hal. 12</span>
+                    </div>
+                    <h4 class="font-display font-bold text-base sm:text-lg text-slate-800 mb-3">Misi: Bantu Pipit Mengumpulkan Biji Jagung!</h4>
+                    <div class="grid grid-cols-4 gap-2 max-w-[230px] mx-auto bg-white p-2.5 rounded-xl border border-amber-200 shadow-inner">
+                        <div class="aspect-square bg-amber-100 rounded-lg flex items-center justify-center text-xl">🐤</div>
+                        <div class="aspect-square bg-slate-50 rounded-lg flex items-center justify-center text-sky-500 font-bold">→</div>
+                        <div class="aspect-square bg-slate-50 rounded-lg flex items-center justify-center text-sky-500 font-bold">↓</div>
+                        <div class="aspect-square bg-rose-50 rounded-lg flex items-center justify-center text-lg">🪨</div>
+                        <div class="aspect-square bg-slate-50 rounded-lg"></div>
+                        <div class="aspect-square bg-rose-50 rounded-lg flex items-center justify-center text-lg">🪨</div>
+                        <div class="aspect-square bg-slate-50 rounded-lg flex items-center justify-center text-sky-500 font-bold">→</div>
+                        <div class="aspect-square bg-emerald-100 rounded-lg flex items-center justify-center text-xl">🌽</div>
+                    </div>
+                </div>
+                <div class="mt-3 bg-white px-3 py-2 rounded-xl border border-amber-200 flex items-center justify-between text-xs">
+                    <span class="font-semibold text-slate-600">Kode Langkah:</span>
+                    <span class="font-bold tracking-widest text-pipit-sky">➡️ ⬇️ ➡️</span>
+                </div>
+            `,
+            angka: `
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 font-bold text-xs rounded-full">Lembar Angka & Berhitung • Usia 3-5 Th</span>
+                        <span class="text-xs font-bold text-slate-400">Hal. 04</span>
+                    </div>
+                    <h4 class="font-display font-bold text-base sm:text-lg text-slate-800 mb-3">Hitung Jumlah Apel & Tebalkan Angkanya!</h4>
+                    <div class="space-y-2.5 bg-white p-3.5 rounded-xl border border-amber-200">
+                        <div class="flex items-center justify-between border-b border-dashed border-slate-200 pb-2">
+                            <span class="text-xl tracking-widest">🍎 🍎 🍎</span>
+                            <span class="w-9 h-9 rounded-lg border-2 border-dashed border-pipit-amber flex items-center justify-center font-display font-bold text-xl text-slate-400">3</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xl tracking-widest">🍓 🍓 🍓 🍓 🍓</span>
+                            <span class="w-9 h-9 rounded-lg border-2 border-dashed border-pipit-sky flex items-center justify-center font-display font-bold text-xl text-slate-400">5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 bg-white px-3 py-2 rounded-xl border border-amber-200 text-xs text-slate-600 font-medium">
+                    🎯 Melatih konsep bilangan konkret & motorik menulis angka.
+                </div>
+            `,
+            huruf: `
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 font-bold text-xs rounded-full">Lembar Abjad & Fonik • Usia 4-6 Th</span>
+                        <span class="text-xs font-bold text-slate-400">Hal. 07</span>
+                    </div>
+                    <h4 class="font-display font-bold text-base sm:text-lg text-slate-800 mb-3">Lingkari Gambar yang Berawalan Huruf "B"!</h4>
+                    <div class="grid grid-cols-3 gap-2.5 bg-white p-3.5 rounded-xl border border-amber-200 text-center">
+                        <div class="p-2 rounded-xl border-2 border-emerald-400 bg-emerald-50">
+                            <div class="text-2xl">⚽</div>
+                            <span class="text-xs font-bold text-emerald-700">Bola ✔</span>
+                        </div>
+                        <div class="p-2 rounded-xl border border-slate-200">
+                            <div class="text-2xl">🐱</div>
+                            <span class="text-xs font-medium text-slate-500">Kucing</span>
+                        </div>
+                        <div class="p-2 rounded-xl border-2 border-emerald-400 bg-emerald-50">
+                            <div class="text-2xl">🦋</div>
+                            <span class="text-xs font-bold text-emerald-700">Kupu / B?</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 bg-white px-3 py-2 rounded-xl border border-amber-200 text-xs text-slate-600 font-medium">
+                    🎯 Mengenal bunyi huruf awal, kosakata baru & mewarnai.
+                </div>
+            `
+        };
+
+        const heroPreviewBox = document.getElementById('hero-preview-box');
+        const heroTabBtns = document.querySelectorAll('.hero-tab-btn');
+
+        function setHeroPreview(type) {
+            heroPreviewBox.innerHTML = heroPreviews[type];
+            heroTabBtns.forEach(btn => {
+                if (btn.dataset.preview === type) {
+                    btn.className = 'hero-tab-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-pipit-sky text-white shadow-sm transition';
+                } else {
+                    btn.className = 'hero-tab-btn px-2.5 py-1 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+                }
+            });
+        }
+
+        heroTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => setHeroPreview(btn.dataset.preview));
+        });
+        setHeroPreview('coding'); // Default aktif
+
+        // 3. DATA & RENDER KATALOG PRODUK INTERAKTIF
+        const WA_NUMBER = '6285753987438';
+        const products = [
+            {
+                id: 'seri-coding-1',
+                category: 'coding',
+                badge: 'Terlaris 🔥',
+                badgeColor: 'bg-rose-500 text-white',
+                headerBg: 'from-sky-400 to-blue-600',
+                icon: '🤖',
+                title: 'Seri Unplugged Coding & Logika Dasar',
+                age: 'Usia 4 – 7 Tahun',
+                pages: '40 Halaman A4 Full Color',
+                shortDesc: 'Mengenalkan algoritma arah, urutan langkah, pola berulang (loop), dan pemecahan masalah tanpa layar HP.',
+                pricePdf: 25000,
+                pricePrint: 55000,
+                highlights: [
+                    'Navigasi peta arah (atas, bawah, kiri, kanan)',
+                    'Melengkapi pola warna & bentuk (pattern recognition)',
+                    'Labirin logika & mencari jalan tercepat',
+                    'Sandi simbol rahasia untuk melatih konsentrasi'
+                ]
+            },
+            {
+                id: 'seri-angka-1',
+                category: 'angka',
+                badge: 'Favorit PAUD',
+                badgeColor: 'bg-amber-400 text-slate-900',
+                headerBg: 'from-amber-400 to-orange-500',
+                icon: '🔢',
+                title: 'Petualangan Angka & Berhitung Ceria (1–20)',
+                age: 'Usia 3 – 6 Tahun',
+                pages: '45 Halaman A4 Full Color',
+                shortDesc: 'Belajar menebalkan angka, berhitung dengan ilustrasi buah & hewan lucu, serta penjumlahan dasar bergambar.',
+                pricePdf: 22000,
+                pricePrint: 52000,
+                highlights: [
+                    'Tracing (menebalkan) angka 1 sampai 20 bertahap',
+                    'Menghitung benda & mencocokkan jumlahnya',
+                    'Konsep lebih banyak, lebih sedikit, dan sama dengan',
+                    'Penjumlahan & pengurangan visual sederhana'
+                ]
+            },
+            {
+                id: 'seri-huruf-1',
+                category: 'huruf',
+                badge: 'Siap SD',
+                badgeColor: 'bg-emerald-500 text-white',
+                headerBg: 'from-emerald-400 to-teal-600',
+                icon: '🔤',
+                title: 'Seri Kenal Abjad A–Z & Suku Kata Awal',
+                age: 'Usia 4 – 6 Tahun',
+                pages: '52 Halaman A4 Full Color',
+                shortDesc: 'Mengenal huruf kapital & kecil, menebalkan garis huruf, mengasosiasikan huruf dengan benda, dan membaca suku kata.',
+                pricePdf: 25000,
+                pricePrint: 58000,
+                highlights: [
+                    'Latihan tracing huruf A–Z dengan panduan arah panah',
+                    'Mencari huruf tersembunyi (letter hunt)',
+                    'Menghubungkan huruf awal dengan ilustrasi hewan/benda',
+                    'Latihan membaca 2 suku kata terbuka (ba-bi-bu-be-bo)'
+                ]
+            },
+            {
+                id: 'seri-motorik-1',
+                category: 'huruf',
+                badge: 'Usia Dini',
+                badgeColor: 'bg-purple-500 text-white',
+                headerBg: 'from-purple-400 to-indigo-500',
+                icon: '🖍️',
+                title: 'Seri Pre-Writing: Garis, Bentuk & Mewarnai',
+                age: 'Usia 3 – 4 Tahun',
+                pages: '36 Halaman A4 Full Color',
+                shortDesc: 'Persiapan memegang pensil untuk balita & PAUD melalui aktivitas menarik garis zig-zag, lengkung, dan mewarnai.',
+                pricePdf: 20000,
+                pricePrint: 48000,
+                highlights: [
+                    'Melatih kekuatan jari & koordinasi mata-tangan',
+                    'Mengenal bentuk geometri dasar (lingkaran, segitiga, persegi)',
+                    'Area mewarnai luas dengan garis tepi tebal',
+                    'Aktivitas gunting-tempel sederhana'
+                ]
+            },
+            {
+                id: 'seri-coding-2',
+                category: 'coding',
+                badge: 'Level Lanjut',
+                badgeColor: 'bg-sky-600 text-white',
+                headerBg: 'from-cyan-500 to-sky-700',
+                icon: '🧩',
+                title: 'Detektif Logika & Koding Tanpa Layar Vol. 2',
+                age: 'Usia 5 – 8 Tahun',
+                pages: '40 Halaman A4 Full Color',
+                shortDesc: 'Tantangan logika tingkat lanjut untuk anak TK B & SD Kelas 1–2: Sudoku bergambar, koordinat grid, dan debugging.',
+                pricePdf: 28000,
+                pricePrint: 58000,
+                highlights: [
+                    'Mini Sudoku 4x4 bergambar hewan & buah',
+                    'Menemukan kesalahan langkah (debugging sederhana)',
+                    'Membaca koordinat baris dan kolom',
+                    'Melatih kemampuan berpikir kritis (critical thinking)'
+                ]
+            },
+            {
+                id: 'paket-bundling-hemat',
+                category: 'bundling',
+                badge: 'Hemat 30% ⭐',
+                badgeColor: 'bg-amber-300 text-slate-900',
+                headerBg: 'from-rose-500 via-amber-500 to-emerald-500',
+                icon: '🎁',
+                title: 'Paket Bundling Lengkap 4-in-1 PipitPintar',
+                age: 'Usia 3 – 7 Tahun',
+                pages: 'Total 173 Halaman (4 Seri Lengkap)',
+                shortDesc: 'Dapatkan seluruh seri utama (Pre-Writing, Abjad A-Z, Angka 1-20, dan Unplugged Coding Vol.1) dalam satu paket hemat!',
+                pricePdf: 65000,
+                pricePrint: 165000,
+                highlights: [
+                    'Berisi 4 Seri Lengkap (173 Halaman aktivitas)',
+                    'Bonus 10 Lembar Mewarnai Spesial Hewan Kalimantan',
+                    'Bonus Stiker Bintang Reward Anak (khusus versi cetak)',
+                    'Cocok untuk stok belajar 3–6 bulan di rumah'
+                ]
+            }
+        ];
+
+        // State pilihan format tiap kartu (default: 'pdf')
+        const selectedFormats = {};
+        products.forEach(p => selectedFormats[p.id] = 'pdf');
+
+        function formatRupiah(angka) {
+            return 'Rp ' + angka.toLocaleString('id-ID');
+        }
+
+        function buildWaLink(product, formatType) {
+            const formatLabel = formatType === 'pdf' ? 'File PDF (Siap Print)' : 'Cetak Fisik (Kertas 100gsm)';
+            const price = formatType === 'pdf' ? product.pricePdf : product.pricePrint;
+            const text = `Halo Admin PipitPintar, saya ingin memesan worksheet berikut:\n\n• Produk: *${product.title}*\n• Format: *${formatLabel}*\n• Estimasi Harga: *${formatRupiah(price)}*\n\nMohon info langkah pembayaran / ongkirnya ya. Terima kasih!`;
+            return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+        }
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            grid.innerHTML = filtered.map(product => {
+                const currentFmt = selectedFormats[product.id];
+                const activePrice = currentFmt === 'pdf' ? product.pricePdf : product.pricePrint;
+                const waUrl = buildWaLink(product, currentFmt);
+
+                return `
+                <div class="bg-white rounded-3xl border border-amber-100 shadow-card hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div>
+                        <!-- Header Visual Kartu (Klik untuk buka detail modal) -->
+                        <div onclick="openProductModal('${product.id}')" class="cursor-pointer bg-gradient-to-r ${product.headerBg} p-5 text-white relative">
+                            <div class="flex justify-between items-start">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold ${product.badgeColor} shadow-sm">${product.badge}</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-black/20 text-[11px] font-semibold backdrop-blur-xs">${product.age}</span>
+                            </div>
+                            <div class="mt-4 flex items-center gap-3.5">
+                                <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">
+                                    ${product.icon}
+                                </div>
+                                <div>
+                                    <h3 class="font-display font-bold text-lg leading-snug group-hover:underline">${product.title}</h3>
+                                    <p class="text-xs text-white/90 mt-1">${product.pages}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Body Kartu -->
+                        <div class="p-5 sm:p-6 space-y-4">
+                            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${product.shortDesc}</p>
+
+                            <!-- Toggle Pilihan Format (PDF vs Cetak Fisik) -->
+                            <div>
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Pilih Format:</span>
+                                <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+                                    <button type="button" onclick="changeFormat('${product.id}', 'pdf', '${filter}')"
+                                        class="py-2 px-2 rounded-lg text-xs font-bold transition ${currentFmt === 'pdf' ? 'bg-white text-pipit-skyDark shadow-sm' : 'text-slate-500 hover:text-slate-800'}">
+                                        📄 File PDF
+                                    </button>
+                                    <button type="button" onclick="changeFormat('${product.id}', 'print', '${filter}')"
+                                        class="py-2 px-2 rounded-lg text-xs font-bold transition ${currentFmt === 'print' ? 'bg-white text-amber-700 shadow-sm' : 'text-slate-500 hover:text-slate-800'}">
+                                        📦 Cetak Fisik
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Kartu: Harga & Tombol Order -->
+                    <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-[11px] text-slate-400 block">${currentFmt === 'pdf' ? 'Harga File PDF' : 'Harga Cetak Fisik'}</span>
+                            <span class="font-display font-bold text-xl text-slate-800">${formatRupiah(activePrice)}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="openProductModal('${product.id}')" title="Lihat Detail Isi"
+                                class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                                Detail
+                            </button>
+                            <a href="${waUrl}" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-1.5 bg-pipit-mint hover:bg-pipit-mintDark text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm transition active:scale-95">
+                                <span>Pesan WA</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function changeFormat(productId, formatType, currentFilter) {
+            selectedFormats[productId] = formatType;
+            renderProducts(currentFilter);
+        }
+
+        // Filter Kategori Event Listeners
+        let activeCategoryFilter = 'all';
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeCategoryFilter = btn.dataset.filter;
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.className = 'filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-600 hover:bg-amber-100 border border-slate-200 transition';
+                });
+                btn.className = 'filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-slate-800 text-white shadow-sm transition';
+                renderProducts(activeCategoryFilter);
+            });
+        });
+
+        renderProducts('all');
+
+        // 4. MODAL DETAIL PRODUK
+        const modal = document.getElementById('product-modal');
+        let currentModalProduct = null;
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            currentModalProduct = product;
+
+            document.getElementById('modal-header-bg').className = `p-6 text-white relative bg-gradient-to-r ${product.headerBg}`;
+            document.getElementById('modal-age').textContent = product.age;
+            document.getElementById('modal-title').textContent = product.title;
+            document.getElementById('modal-pages').textContent = product.pages;
+            document.getElementById('modal-desc').textContent = product.shortDesc;
+
+            document.getElementById('modal-highlights').innerHTML = product.highlights.map(item =>
+                `<li class="flex items-start gap-2"><span class="text-pipit-mint font-bold">✔</span><span>${item}</span></li>`
+            ).join('');
+
+            updateModalPricing();
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function updateModalPricing() {
+            if (!currentModalProduct) return;
+            const fmt = selectedFormats[currentModalProduct.id];
+            const price = fmt === 'pdf' ? currentModalProduct.pricePdf : currentModalProduct.pricePrint;
+
+            document.getElementById('modal-format-selector').innerHTML = `
+                <button type="button" onclick="setModalFormat('pdf')"
+                    class="p-3 rounded-xl border-2 text-left transition ${fmt === 'pdf' ? 'border-pipit-sky bg-sky-50' : 'border-slate-200 hover:bg-slate-50'}">
+                    <div class="font-bold text-xs text-slate-800">📄 File PDF Digital</div>
+                    <div class="text-xs font-bold text-pipit-skyDark mt-0.5">${formatRupiah(currentModalProduct.pricePdf)}</div>
+                </button>
+                <button type="button" onclick="setModalFormat('print')"
+                    class="p-3 rounded-xl border-2 text-left transition ${fmt === 'print' ? 'border-pipit-amber bg-amber-50' : 'border-slate-200 hover:bg-slate-50'}">
+                    <div class="font-bold text-xs text-slate-800">📦 Cetak Fisik (100gsm)</div>
+                    <div class="text-xs font-bold text-amber-700 mt-0.5">${formatRupiah(currentModalProduct.pricePrint)}</div>
+                </button>
+            `;
+
+            document.getElementById('modal-price').textContent = formatRupiah(price);
+            document.getElementById('modal-wa-btn').href = buildWaLink(currentModalProduct, fmt);
+        }
+
+        function setModalFormat(fmt) {
+            if (!currentModalProduct) return;
+            selectedFormats[currentModalProduct.id] = fmt;
+            updateModalPricing();
+            renderProducts(activeCategoryFilter);
+        }
+
+        function closeProductModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeProductModal();
+        });
+
+        // 5. MINI GAME INTERAKTIF UNPLUGGED CODING (GRID 4x4)
+        const levels = [
+            {
+                title: 'Misi 1: Bantu Pipit ke Sarang!',
+                start: { r: 0, c: 0 },
+                goal: { r: 2, c: 3, icon: '🪺' },
+                obstacles: [{ r: 0, c: 2 }, { r: 1, c: 1 }, { r: 3, c: 2 }]
+            },
+            {
+                title: 'Misi 2: Ambil Biji Jagung Manis!',
+                start: { r: 3, c: 0 },
+                goal: { r: 0, c: 3, icon: '🌽' },
+                obstacles: [{ r: 2, c: 0 }, { r: 2, c: 2 }, { r: 1, c: 2 }]
+            },
+            {
+                title: 'Misi 3: Temukan Buku Pintar!',
+                start: { r: 0, c: 3 },
+                goal: { r: 3, c: 1, icon: '📚' },
+                obstacles: [{ r: 1, c: 3 }, { r: 1, c: 1 }, { r: 2, c: 2 }]
+            }
+        ];
+
+        let currentLevelIdx = 0;
+        let pipitPos = { ...levels[0].start };
+        let commandQueue = [];
+        let isRunning = false;
+
+        function renderCodingGrid() {
+            const level = levels[currentLevelIdx];
+            document.getElementById('game-level-badge').textContent = level.title;
+            const gridEl = document.getElementById('coding-grid');
+            let cellsHtml = '';
+
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const isPipit = (pipitPos.r === r && pipitPos.c === c);
+                    const isGoal = (level.goal.r === r && level.goal.c === c);
+                    const isObstacle = level.obstacles.some(o => o.r === r && o.c === c);
+
+                    let cellClass = 'bg-white border border-slate-200';
+                    let content = '';
+
+                    if (isObstacle) {
+                        cellClass = 'bg-slate-200/80 border border-slate-300';
+                        content = '<span class="text-2xl sm:text-3xl select-none">⛈️</span>';
+                    } else if (isGoal && isPipit) {
+                        cellClass = 'bg-emerald-200 border-2 border-emerald-500 scale-105';
+                        content = '<span class="text-2xl sm:text-3xl animate-bounce select-none">🎉</span>';
+                    } else if (isPipit) {
+                        cellClass = 'bg-amber-200 border-2 border-amber-400 shadow-sm';
+                        content = '<span class="text-2xl sm:text-3xl select-none">🐤</span>';
+                    } else if (isGoal) {
+                        cellClass = 'bg-emerald-50 border-2 border-dashed border-emerald-400';
+                        content = `<span class="text-2xl sm:text-3xl select-none">${level.goal.icon}</span>`;
+                    }
+
+                    cellsHtml += `<div class="rounded-xl flex items-center justify-center transition-all duration-300 ${cellClass}">${content}</div>`;
+                }
+            }
+            gridEl.innerHTML = cellsHtml;
+        }
+
+        function renderCommandQueue() {
+            const queueEl = document.getElementById('command-queue');
+            const icons = { UP: '⬆️', DOWN: '⬇️', LEFT: '⬅️', RIGHT: '➡️' };
+
+            if (commandQueue.length === 0) {
+                queueEl.innerHTML = '<span class="text-xs text-slate-400 italic">Belum ada langkah dipilih...</span>';
+                return;
+            }
+
+            queueEl.innerHTML = commandQueue.map((cmd, idx) => `
+                <button type="button" onclick="removeCommand(${idx})" title="Klik untuk hapus langkah ini"
+                    class="px-2.5 py-1 bg-sky-100 hover:bg-rose-100 text-slate-800 rounded-lg text-sm font-bold border border-sky-200 transition">
+                    ${icons[cmd]}
+                </button>
+            `).join('');
+        }
+
+        function addCommand(dir) {
+            if (isRunning) return;
+            if (commandQueue.length >= 10) {
+                showGameStatus('Maksimal 10 langkah ya! Coba jalankan dulu.', 'bg-amber-100 text-amber-800');
+                return;
+            }
+            hideGameStatus();
+            commandQueue.push(dir);
+            renderCommandQueue();
+        }
+
+        function removeCommand(index) {
+            if (isRunning) return;
+            commandQueue.splice(index, 1);
+            renderCommandQueue();
+        }
+
+        function showGameStatus(msg, classes) {
+            const box = document.getElementById('game-status-box');
+            box.className = `rounded-xl p-3 text-xs sm:text-sm font-semibold text-center ${classes}`;
+            box.textContent = msg;
+            box.classList.remove('hidden');
+        }
+
+        function hideGameStatus() {
+            document.getElementById('game-status-box').classList.add('hidden');
+        }
+
+        function resetGame() {
+            isRunning = false;
+            pipitPos = { ...levels[currentLevelIdx].start };
+            commandQueue = [];
+            hideGameStatus();
+            renderCodingGrid();
+            renderCommandQueue();
+        }
+
+        document.getElementById('btn-next-level').addEventListener('click', () => {
+            currentLevelIdx = (currentLevelIdx + 1) % levels.length;
+            resetGame();
+        });
+
+        async function runCode() {
+            if (isRunning) return;
+            if (commandQueue.length === 0) {
+                showGameStatus('Pilih minimal 1 tombol panah dulu ya!', 'bg-amber-100 text-amber-800');
+                return;
+            }
+
+            isRunning = true;
+            hideGameStatus();
+            const level = levels[currentLevelIdx];
+            pipitPos = { ...level.start };
+            renderCodingGrid();
+
+            for (let i = 0; i < commandQueue.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, 420));
+                const step = commandQueue[i];
+
+                if (step === 'UP') pipitPos.r -= 1;
+                if (step === 'DOWN') pipitPos.r += 1;
+                if (step === 'LEFT') pipitPos.c -= 1;
+                if (step === 'RIGHT') pipitPos.c += 1;
+
+                // Cek keluar batas papan
+                if (pipitPos.r < 0 || pipitPos.r > 3 || pipitPos.c < 0 || pipitPos.c > 3) {
+                    showGameStatus('Ups! Pipit keluar dari kotak jalur. Klik Reset dan coba lagi!', 'bg-rose-100 text-rose-700');
+                    isRunning = false;
+                    return;
+                }
+
+                // Cek menabrak awan hujan
+                const hitObstacle = level.obstacles.some(o => o.r === pipitPos.r && o.c === pipitPos.c);
+                renderCodingGrid();
+
+                if (hitObstacle) {
+                    showGameStatus('Yah, kena awan hujan ⛈️! Coba ubah urutan langkahnya ya.', 'bg-rose-100 text-rose-700');
+                    isRunning = false;
+                    return;
+                }
+
+                // Cek sampai tujuan
+                if (pipitPos.r === level.goal.r && pipitPos.c === level.goal.c) {
+                    showGameStatus('Hebat! 🎉 Misi berhasil! Seperti inilah serunya belajar logika di worksheet PipitPintar.', 'bg-emerald-100 text-emerald-800');
+                    isRunning = false;
+                    return;
+                }
+            }
+
+            showGameStatus('Langkahnya sudah habis, tapi Pipit belum sampai tujuan. Tambahkan langkah lagi!', 'bg-amber-100 text-amber-800');
+            isRunning = false;
+        }
+
+        // Inisialisasi papan game saat pertama kali dibuka
+        renderCodingGrid();
+
+        // 6. FAQ ACCORDION INTERAKTIF
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                const content = item.querySelector('.faq-content');
+                const icon = item.querySelector('.faq-icon');
+                const isOpen = !content.classList.contains('hidden');
+
+                // Tutup semua FAQ lain agar rapi
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-icon').forEach(ic => ic.textContent = '+');
+
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    icon.textContent = '−';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
